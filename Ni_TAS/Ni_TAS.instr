@@ -143,7 +143,7 @@
 * %End
 *******************************************************************************/
 
-DEFINE INSTRUMENT Ni_TAS(EI=40, EF=40, QHK=1, QL=1, Temperature_K=70)
+DEFINE INSTRUMENT Ni_TAS(EI=40, EF=40, QHK=1, QL=1, Temperature_K=70, ALF1=60, ALF2=60, ALF3=60, ALF4=60)
 
 DECLARE
 %{
@@ -158,7 +158,7 @@ double SM=1, SS=-1, SA=1;
 double DM=3.3539, DA=3.3539;
 double RMV=-1, RMH=0, RAV=0, RAH=-1;
 double ETAM=30, ETAA=30;
-double ALF1=60, ALF2=60, ALF3=60, ALF4=60;
+//double ALF1=60, ALF2=60, ALF3=60, ALF4=60;
 double BET1=120, BET2=120, BET3=120, BET4=120;
 //double BET1=120, BET2=60, BET3=60, BET4=120;
 double AS=3.5238, BS=3.5238, CS=3.5238;
@@ -684,11 +684,16 @@ COMPONENT SC2 = Collimator_linear(
 WHEN (ALF2 && BET2)
 AT (0, 0, (machine_hkl.l2-0.35)/2) RELATIVE Mono_Out
 
+COMPONENT before_sample = Arm()
+AT (0, 0, machine_hkl.l2) RELATIVE Mono_Out
+
+/*
 COMPONENT before_sample = Monitor_nD(
   xwidth=0.02, yheight=0.02, options="per cm2",
   filename="before_sample.dat",restore_neutron=1)
 AT (0, 0, machine_hkl.l2) RELATIVE Mono_Out
 ROTATED (0, 0, 0) RELATIVE Mono_Out
+*/
 
 COMPONENT Sample_Cradle_2 = Arm()
 AT (0, 0, 0) RELATIVE before_sample
